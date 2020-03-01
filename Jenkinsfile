@@ -5,9 +5,7 @@
 def tools = new org.devops.tools()
 
 pipeline{
-    agent{
-        label "node"
-    }
+    agent none
     stages{
         stage("获取代码"){
             steps{
