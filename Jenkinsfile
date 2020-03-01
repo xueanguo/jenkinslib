@@ -1,6 +1,6 @@
 #!groovy
 
-@Libray('jenkinslib) _
+@Libray('jenkinslib') _
 
 def tools = new org.devops.tools
 
@@ -14,18 +14,6 @@ pipeline{
                     tools.PrintMes("this is my lib!")
                 }
             }
-            post{
-                always{
-                    echo "========always========"
-                }
-                success{
-                    echo "========A executed successfully========"
-                }
-                failure{
-                    echo "========A execution failed========"
-                }
-            }
-        }
     }
     post{
         always{
@@ -38,4 +26,5 @@ pipeline{
             echo "========pipeline execution failed========"
         }
     }
+}
 }
