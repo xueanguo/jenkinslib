@@ -11,7 +11,7 @@ pipeline{
             steps{
                 echo "========executing A========"
                 script{
-                    mvnHome = tool "M2"
+                    def mvnHome = tool name: 'M2'
                     sh "${mvnHome}/bin/mvn --version"
                 }
 
