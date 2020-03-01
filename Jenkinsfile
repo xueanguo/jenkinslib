@@ -13,6 +13,10 @@ pipeline{
                 script{
                     tools.PrintMes("获取代码","red")
                 }
+            withCredentials([usernamePassword(credentialsId: '27c1c7d5-b863-4313-ad77-ac0bf0e19578', passwordVariable: 'password', usernameVariable: 'username')]) {
+                println(username)
+                println(password)
+            }
             }
         }
         stage("打包编译"){
