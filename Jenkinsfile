@@ -11,7 +11,7 @@ pipeline {
             steps{
                 echo "========executing A========"
                 script{
-                    tools.PrintMes("this is my lib!")
+                    tools.PrintMes("this is my lib!","red")
                 }
             }
         }
