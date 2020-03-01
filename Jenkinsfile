@@ -15,6 +15,7 @@ pipeline{
             steps{
                 echo "========executing A========"
                 script{
+                    tools.PrintMes("获取代码","red")
                     def mvnHome = tool name: 'M2'
                     sh "${mvnHome}/bin/mvn --version"
                 }
