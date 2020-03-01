@@ -4,7 +4,7 @@
 
 def tools = new org.devops.tools()
 
-pipeline{
+pipeline {
     agent none
     stages{
         stage("A"){
@@ -14,6 +14,6 @@ pipeline{
                     tools.PrintMes("this is my lib!")
                 }
             }
+        }
     }
-}
 }
