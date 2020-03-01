@@ -4,16 +4,37 @@
 
 def tools = new org.devops.tools()
 
-pipeline {
-    agent none
+pipeline{
+    agent{
+        label "node"
+    }
     stages{
-        stage("A"){
+        stage("获取代码"){
             steps{
                 echo "========executing A========"
                 script{
-                    tools.PrintMes("this is my lib!","red")
+                    tools.PrintMes("获取代码","red")
                 }
             }
+        }
+        stage("打包编译"){
+            steps{
+                echo "========executing A========"
+                script{
+                    tools.PrintMes("打包编译","green")
+                }
+            }
+        }
+    }
+    post{
+        always{
+            echo "========always========"
+        }
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
         }
     }
 }
