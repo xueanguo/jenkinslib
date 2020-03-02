@@ -31,25 +31,33 @@ pipeline{
         }
     }
     post{
-        wrap([$class: 'BuildUser']) {
-        def user = env.BUILD_USER_ID
-        }
+
         always{
             echo "========always========"
         }
         success{
             script{
-                currentBuild.description+=user+"构建成功"
+                wrap([$class: 'BuildUser']) {
+                    currentBuild.description+=${BUILD_USER}+"构建成功"
+                }
             }
         }
         failure{
             script{
-                currentBuild.description+=user+"构建失败"
+            script{
+                wrap([$class: 'BuildUser']) {
+                    currentBuild.description+=${BUILD_USER}+"构建失败"
+                }
+            }
             }
         }
         aborted{
             script{
-                currentBuild.descriptio +=user+"构建取消"
+            script{
+                wrap([$class: 'BuildUser']) {
+                    currentBuild.description+=${BUILD_USER}+"构建取消"
+                }
+            }
             }
         }
     }
