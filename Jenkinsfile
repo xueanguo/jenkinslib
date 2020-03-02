@@ -4,6 +4,7 @@
 
 String buildType = "${env.buildType}"
 String buildShell = "${env.buildShell}"
+String buildUser = "${env.BUILD_USER}"
 
 def tool = new org.devops.tools()
 def build = new org.devops.build()
@@ -36,17 +37,17 @@ pipeline{
         }
         success{
             script{
-                currentBuild.description +=${BUILD_USER}+"构建成功"
+                currentBuild.description +=buildUser+"构建成功"
             }
         }
         failure{
             script{
-                currentBuild.description +=${BUILD_USER}+"构建失败"
+                currentBuild.description +=buildUser+"构建失败"
             }
         }
         aborted{
             script{
-                currentBuild.description +=${BUILD_USER}+"构建取消"
+                currentBuild.description +=buildUser+"构建取消"
             }
         }
     }
