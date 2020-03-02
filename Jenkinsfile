@@ -5,7 +5,7 @@
 String buildType = "${env.buildType}"
 String buildShell = "${env.buildShell}"
 
-def tools = new org.devops.tools()
+def tool = new org.devops.tools()
 def build = new org.devops.build()
 
 pipeline{
@@ -15,11 +15,11 @@ pipeline{
         }
     }
     stages{
-        stage("build"){
+        stage("Build"){
             steps{
                 echo "========executing A========"
                 script{
-                    tools.PrintMes("编译","yellow")
+                    tool.PrintMes("Build","yellow")
                     build.Build(buildType,buildShell)
                 }
 
@@ -35,10 +35,19 @@ pipeline{
             echo "========always========"
         }
         success{
-            echo "========pipeline executed successfully ========"
+            script{
+                currentBuild.description +=${BUILD_USER}+"构建成功"
+            }
         }
         failure{
-            echo "========pipeline execution failed========"
+            script{
+                currentBuild.description +=${BUILD_USER}+"构建失败"
+            }
+        }
+        aborted{
+            script{
+                currentBuild.description +=${BUILD_USER}+"构建取消"
+            }
         }
     }
 }
