@@ -5,6 +5,7 @@
 String buildShell = "${env.buildShell}"
 
 def tools = new org.devops.tools()
+def build = new org.devops.build()
 
 pipeline{
     agent {
