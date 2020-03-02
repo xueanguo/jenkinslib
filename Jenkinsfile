@@ -19,7 +19,7 @@ pipeline{
             steps{
                 echo "========executing A========"
                 script{
-                    tools.PrintMes("编译","red")
+                    tools.PrintMes("编译","yellow")
                     build.Build(buildType,buildShell)
                 }
 
