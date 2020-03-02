@@ -34,20 +34,21 @@ pipeline{
     post{
         always{
             echo "========always========"
+            echo "${buildUser}"
         }
         success{
             script{
-                currentBuild.description +=buildUser+"构建成功"
+                currentBuild.description+=buildUser+"构建成功"
             }
         }
         failure{
             script{
-                currentBuild.description +=buildUser+"构建失败"
+                currentBuild.description+=buildUser+"构建失败"
             }
         }
         aborted{
             script{
-                currentBuild.description +=buildUser+"构建取消"
+                currentBuild.descriptio +=buildUser+"构建取消"
             }
         }
     }
