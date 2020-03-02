@@ -44,20 +44,16 @@ pipeline{
         }
         failure{
             script{
-            script{
                 wrap([$class: 'BuildUser']) {
                     currentBuild.description+=${BUILD_USER}+"构建失败"
                 }
             }
-            }
         }
         aborted{
-            script{
             script{
                 wrap([$class: 'BuildUser']) {
                     currentBuild.description+=${BUILD_USER}+"构建取消"
                 }
-            }
             }
         }
     }
