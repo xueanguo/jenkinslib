@@ -4,7 +4,6 @@
 
 String buildType = "${env.buildType}"
 String buildShell = "${env.buildShell}"
-String buildUser = "${env.BUILD_USER}"
 
 def tool = new org.devops.tools()
 def build = new org.devops.build()
@@ -32,24 +31,28 @@ pipeline{
         }
     }
     post{
+        wrap([$class: 'BuildUser']) {
+        def user = env.BUILD_USER_ID
+        }
         always{
             echo "========always========"
-            echo "${buildUser}"
         }
         success{
             script{
-                currentBuild.description+=buildUser+"构建成功"
+                currentBuild.description+=user+"构建成功"
             }
         }
         failure{
             script{
-                currentBuild.description+=buildUser+"构建失败"
+                currentBuild.description+=user+"构建失败"
             }
         }
         aborted{
             script{
-                currentBuild.descriptio +=buildUser+"构建取消"
+                currentBuild.descriptio +=user+"构建取消"
             }
         }
     }
 }
+
+
