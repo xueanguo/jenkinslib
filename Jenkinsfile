@@ -18,9 +18,10 @@ pipeline{
         }
     }
     stages{
-        stage(Checkout){
+        stage("Checkout"){
             steps{
                 script{
+                    tool.PrintMes("Checkout","green")
                     checkout([$class: 'GitSCM', branches: [[name: "${branchName}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '27c1c7d5-b863-4313-ad77-ac0bf0e19578', url: "${srcUrl}"]]])
                 }
             }
@@ -29,7 +30,7 @@ pipeline{
         stage("Build"){
             steps{
                 script{
-                    tool.PrintMes("Build","yellow")
+                    tool.PrintMes("Build","blue")
                     build.Build(buildType,buildShell)
                 }
 
