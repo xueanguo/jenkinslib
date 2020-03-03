@@ -37,23 +37,17 @@ pipeline{
         }
         success{
             script{
-                wrap([$class: 'BuildUser']) {
-                    currentBuild.description+=${BUILD_USER}+"构建成功"
-                }
+                    currentBuild.description="构建成功"
             }
         }
         failure{
             script{
-                wrap([$class: 'BuildUser']) {
-                    currentBuild.description+=${BUILD_USER}+"构建失败"
-                }
+                    currentBuild.description+="构建失败"
             }
         }
         aborted{
             script{
-                wrap([$class: 'BuildUser']) {
-                    currentBuild.description+=${BUILD_USER}+"构建取消"
-                }
+                    currentBuild.description+="构建取消"
             }
         }
     }
