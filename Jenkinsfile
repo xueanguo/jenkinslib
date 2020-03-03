@@ -5,6 +5,9 @@
 String buildType = "${env.buildType}"
 String buildShell = "${env.buildShell}"
 
+String srcUrl = "${env.srcUrl}"
+String branchName = "${env.branchName}"
+
 def tool = new org.devops.tools()
 def build = new org.devops.build()
 
@@ -15,9 +18,16 @@ pipeline{
         }
     }
     stages{
+        stage(Checkout){
+            steps{
+                script{
+                    checkout([$class: 'GitSCM', branches: [[name: "${branchName}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '27c1c7d5-b863-4313-ad77-ac0bf0e19578', url: "${srcUrl}"]]])
+                }
+            }
+        }
+
         stage("Build"){
             steps{
-                echo "========executing A========"
                 script{
                     tool.PrintMes("Build","yellow")
                     build.Build(buildType,buildShell)
