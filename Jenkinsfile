@@ -8,8 +8,15 @@ String buildShell = "${env.buildShell}"
 String srcUrl = "${env.srcUrl}"
 String branchName = "${env.branchName}"
 
+if("${runOpts}" == "GitlabPush"){
+    branchName = branch - "refs/heads/"
+    currentBuild.description = "Trigger by username:${userName} branch:${branchName}"
+}
+
 def tool = new org.devops.tools()
 def build = new org.devops.build()
+def gitlab = new org.devops.gitlab()
+def toemail = new org.devops.toemail()
 
 pipeline{
     agent {
@@ -34,10 +41,10 @@ pipeline{
                     build.Build(buildType,buildShell)
                 }
 
-            withCredentials([usernamePassword(credentialsId: '27c1c7d5-b863-4313-ad77-ac0bf0e19578', passwordVariable: 'password', usernameVariable: 'username')]) {
-                println(username)
-                println(password)
-            }
+//            withCredentials([usernamePassword(credentialsId: '27c1c7d5-b863-4313-ad77-ac0bf0e19578', passwordVariable: 'password', usernameVariable: 'username')]) {
+//                println(username)
+//                println(password)
+//            }
             }
         }
     }
@@ -48,17 +55,26 @@ pipeline{
         }
         success{
             script{
-                    currentBuild.description="构建成功"
+                if("${runOpts}" == "GitlabPush"){
+                    gitlab.ChangeCommitStatus(projectId,commitSha,"success")
+                    toemail.Email("流水线构建成功",userEmail)
+                }
             }
         }
         failure{
             script{
-                    currentBuild.description+="构建失败"
+                if("${runOpts}" == "GitlabPush"){
+                    gitlab.ChangeCommitStatus(projectId,commitSha,"failed")
+                    toemail.Email("流水线构建失败",userEmail)
+                }
             }
         }
         aborted{
             script{
-                    currentBuild.description+="构建取消"
+                if("${runOpts}" == "GitlabPush"){
+                    gitlab.ChangeCommitStatus(projectId,commitSha,"canceled")
+                    toemail.Email("流水线构建取消",userEmail)
+                }
             }
         }
     }
